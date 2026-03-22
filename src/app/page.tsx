@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ZoomParallax, type ZoomImage } from '@/components/ZoomParallax';
@@ -71,7 +71,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
 
 // ─── Features Section ────────────────────────────────────────────────────────
-function FeaturesSection({ featuresRef, featuresBg }: { featuresRef: React.RefObject<HTMLElement | null>; featuresBg: ReturnType<typeof useTransform> }) {
+function FeaturesSection({ featuresRef, featuresBg }: { featuresRef: React.RefObject<HTMLElement | null>; featuresBg: MotionValue<string> }) {
   const [active, setActive] = useState<number | null>(null);
 
   return (
