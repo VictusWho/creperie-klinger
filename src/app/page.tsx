@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ZoomParallax, type ZoomImage } from '@/components/ZoomParallax';
@@ -71,12 +71,15 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
 
 
 // ─── Features Section ────────────────────────────────────────────────────────
-function FeaturesSection({ featuresRef, featuresBg }: { featuresRef: React.RefObject<HTMLElement | null>; featuresBg: MotionValue<string> }) {
+function FeaturesSection() {
   const [active, setActive] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
 
   return (
-    <section ref={featuresRef} style={{ padding: '8rem 0', background: 'var(--stone-dark)', overflow: 'hidden', position: 'relative' }}>
-      <motion.div style={{ y: featuresBg }} className="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <section ref={sectionRef} style={{ padding: '8rem 0', background: 'var(--stone-dark)', overflow: 'hidden', position: 'relative' }}>
+      <motion.div style={{ y: bgY, position: 'absolute', inset: 0, pointerEvents: 'none' }} aria-hidden="true">
         <div style={{ position: 'absolute', bottom: '-20%', right: '-5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(224,136,158,0.07) 0%, transparent 70%)' }} />
       </motion.div>
 
@@ -321,13 +324,10 @@ function JobsSection() {
 // ─── Home Page ────────────────────────────────────────────────────────────────
 export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null);
-  const featuresRef = useRef<HTMLElement>(null);
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const { scrollYProgress: featuresScroll } = useScroll({ target: featuresRef, offset: ['start end', 'end start'] });
 
   const heroOpacity = useTransform(heroScroll, [0, 0.6], [1, 0]);
   const heroY = useTransform(heroScroll, [0, 1], ['0%', '12%']);
-  const featuresBg = useTransform(featuresScroll, [0, 1], ['0%', '-8%']);
 
   return (
     <>
@@ -417,7 +417,7 @@ export default function HomePage() {
       {/* ══════════════════════════════
           FEATURES — interaktiv
       ══════════════════════════════ */}
-      <FeaturesSection featuresRef={featuresRef} featuresBg={featuresBg} />
+      <FeaturesSection />
 
       {/* ══════════════════════════════
           MENU PREVIEW
