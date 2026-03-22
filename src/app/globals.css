@@ -1,26 +1,94 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --stone:        #F8F4EE;
+  --stone-dark:   #EDE8DF;
+  --stone-muted:  #E4DDD3;
+  --terra:        #E0889E;
+  --terra-dark:   #B8607A;
+  --terra-light:  #FAE8EE;
+  --sienna:       #C4933F;
+  --ink:          #1A1614;
+  --slate:        #5C5047;
+  --slate-light:  #8C7D70;
+  --maritime:     #1E3A5F;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-stone:       var(--stone);
+  --color-stone-dark:  var(--stone-dark);
+  --color-stone-muted: var(--stone-muted);
+  --color-terra:       var(--terra);
+  --color-terra-dark:  var(--terra-dark);
+  --color-terra-light: var(--terra-light);
+  --color-sienna:      var(--sienna);
+  --color-ink:         var(--ink);
+  --color-slate:       var(--slate);
+  --color-slate-light: var(--slate-light);
+  --color-maritime:    var(--maritime);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans:    'DM Sans', system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--stone);
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100dvh;
+}
+
+.font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+:focus-visible {
+  outline: 2px solid var(--terra);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--stone-dark); }
+::-webkit-scrollbar-thumb  { background: var(--terra); border-radius: 2px; }
+
+/* ─── Nav underline ─── */
+.nav-link { position: relative; text-decoration: none; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--terra);
+  transition: width 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.nav-link:hover::after,
+.nav-link.active::after { width: 100%; }
+
+/* ─── Ornamental divider ─── */
+.ornament {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.ornament::before,
+.ornament::after {
+  content: '';
+  height: 1px;
+  width: 3rem;
+  background: var(--terra);
+  opacity: 0.5;
 }
