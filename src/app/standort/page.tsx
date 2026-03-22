@@ -19,7 +19,7 @@ const today = new Date().getDay();
 const todayIndex = today === 0 ? 6 : today - 1;
 
 const contactItems = [
-  { Icon: IconPhone,     label: 'Telefon',   value: '+49 123 456 789',           href: 'tel:+49123456789' },
+  { Icon: IconPhone,     label: 'Telefon',   value: '0177 7897073',              href: 'tel:+491777897073' },
   { Icon: IconMail,      label: 'E-Mail',    value: 'hallo@creperie-klinger.de', href: 'mailto:hallo@creperie-klinger.de' },
   { Icon: IconInstagram, label: 'Instagram', value: '@creperie.klinger',          href: '#' },
 ];
@@ -71,15 +71,14 @@ export default function StandortPage() {
                 <address style={{ fontStyle: 'normal' }}>
                   <p className="font-display" style={{ fontStyle: 'italic', fontWeight: 300, fontSize: '1.5rem', color: 'var(--ink)', marginBottom: '0.5rem' }}>Crêperie Klinger</p>
                   <p className="font-sans" style={{ fontSize: '0.875rem', lineHeight: 1.7, color: 'var(--slate)' }}>
-                    Musterstraße 12<br />
-                    12345 Musterstadt
+                    Stadsweide 2<br />
+                    6041 TD Roermond, Niederlande
                   </p>
                 </address>
                 <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(184,92,56,0.1)' }}>
-                  <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--slate-light)', marginBottom: '0.625rem' }}>Anfahrt</p>
+                  <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--slate-light)', marginBottom: '0.625rem' }}>Zu finden im</p>
                   <p className="font-sans" style={{ fontSize: '0.875rem', lineHeight: 1.7, color: 'var(--slate)' }}>
-                    Straßenbahn Linie 3 · Haltestelle Marktplatz<br />
-                    Parkhaus 200 m entfernt
+                    Designer Outlet Roermond
                   </p>
                 </div>
               </motion.div>

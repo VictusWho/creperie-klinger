@@ -59,14 +59,14 @@ export default function Footer() {
               Kontakt
             </p>
             <address style={{ fontStyle: 'normal', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <p className="font-sans" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>Musterstraße 12</p>
-              <p className="font-sans" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>12345 Musterstadt</p>
+              <p className="font-sans" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>Stadsweide 2</p>
+              <p className="font-sans" style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.4)' }}>6041 TD Roermond, NL</p>
               <div style={{ paddingTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                <a href="tel:+49123456789" className="font-sans"
+                <a href="tel:+491777897073" className="font-sans"
                   style={{ fontSize: '0.875rem', display: 'block', color: 'rgba(255,255,255,0.4)', transition: 'color 0.25s ease', textDecoration: 'none' }}
                   onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
                   onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}>
-                  +49 123 456 789
+                  0177 7897073
                 </a>
                 <a href="mailto:hallo@creperie-klinger.de" className="font-sans"
                   style={{ fontSize: '0.875rem', display: 'block', color: 'rgba(255,255,255,0.4)', transition: 'color 0.25s ease', textDecoration: 'none' }}

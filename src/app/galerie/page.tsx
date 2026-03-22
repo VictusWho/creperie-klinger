@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const ease = [0.32, 0.72, 0, 1] as const;
 
@@ -44,9 +44,24 @@ const categories = [
 
 export default function GaleriePage() {
   const [activeCategory, setActiveCategory] = useState('alle');
-  const [lightbox, setLightbox] = useState<Photo | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const filtered = activeCategory === 'alle' ? photos : photos.filter(p => p.category === activeCategory);
+  const lightbox = lightboxIndex !== null ? filtered[lightboxIndex] : null;
+
+  const prev = useCallback(() => setLightboxIndex(i => i !== null ? (i - 1 + filtered.length) % filtered.length : null), [filtered.length]);
+  const next = useCallback(() => setLightboxIndex(i => i !== null ? (i + 1) % filtered.length : null), [filtered.length]);
+
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft')  prev();
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'Escape')     setLightboxIndex(null);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [lightboxIndex, prev, next]);
 
   return (
     <div style={{ background: 'var(--stone)', minHeight: '100dvh' }}>
@@ -95,7 +110,7 @@ export default function GaleriePage() {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: i * 0.05, ease }}
-                  onClick={() => setLightbox(photo)}
+                  onClick={() => setLightboxIndex(i)}
                   style={{
                     breakInside: 'avoid',
                     marginBottom: '1rem',
@@ -135,18 +150,41 @@ export default function GaleriePage() {
 
       {/* ── Lightbox ── */}
       <AnimatePresence>
-        {lightbox && (
+        {lightbox && lightboxIndex !== null && (
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            onClick={() => setLightbox(null)}
-            style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(26,22,20,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', cursor: 'zoom-out' }}
+            onClick={() => setLightboxIndex(null)}
+            style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(26,22,20,0.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', cursor: 'zoom-out' }}
           >
+            {/* Prev button */}
+            <button
+              onClick={e => { e.stopPropagation(); prev(); }}
+              aria-label="Vorheriges Bild"
+              style={{ position: 'absolute', left: '1.5rem', top: '50%', transform: 'translateY(-50%)', width: 48, height: 48, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s ease', zIndex: 10 }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.18)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+
+            {/* Next button */}
+            <button
+              onClick={e => { e.stopPropagation(); next(); }}
+              aria-label="Nächstes Bild"
+              style={{ position: 'absolute', right: '1.5rem', top: '50%', transform: 'translateY(-50%)', width: 48, height: 48, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s ease', zIndex: 10 }}
+              onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.18)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.08)'}
+            >
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3L11 8L6 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3, ease }}
+              key={lightboxIndex}
+              initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25, ease }}
               onClick={e => e.stopPropagation()}
-              style={{ position: 'relative', maxWidth: 800, width: '100%' }}
+              style={{ position: 'relative', maxWidth: 800, width: '100%', cursor: 'default' }}
             >
               <div style={{ background: lightbox.bg, height: 520, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
                 <span style={{ fontSize: '4rem', opacity: 0.4 }}>{lightbox.icon}</span>
@@ -157,11 +195,16 @@ export default function GaleriePage() {
                   <p className="font-display" style={{ fontStyle: 'italic', fontWeight: 300, fontSize: '1.5rem', color: 'white' }}>{lightbox.label}</p>
                   <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--terra)', marginTop: '0.25rem' }}>{lightbox.sub}</p>
                 </div>
-                <button onClick={() => setLightbox(null)}
-                  style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)', padding: '0.5rem 1rem', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase' }}
-                  className="font-sans">
-                  Schließen
-                </button>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                  <span className="font-sans" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em' }}>
+                    {lightboxIndex + 1} / {filtered.length}
+                  </span>
+                  <button onClick={() => setLightboxIndex(null)}
+                    style={{ background: 'none', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.6)', padding: '0.5rem 1rem', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase' }}
+                    className="font-sans">
+                    Schließen
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
