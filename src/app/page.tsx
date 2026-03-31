@@ -498,6 +498,97 @@ export default function HomePage() {
       </section>
 
       {/* ══════════════════════════════
+          INSTAGRAM
+      ══════════════════════════════ */}
+      <section style={{ padding: '8rem 0', background: 'var(--stone)' }}>
+        <div style={{ maxWidth: 900, margin: '0 auto', padding: '0 2rem' }}>
+
+          {/* Header */}
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.7, ease }}
+            style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <p className="font-sans" style={{ fontSize: '10px', letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--terra)', marginBottom: '1rem' }}>Folg uns</p>
+            <h2 className="font-display" style={{ fontStyle: 'italic', fontWeight: 300, fontSize: 'clamp(2.4rem,5vw,3.8rem)', color: 'var(--ink)', lineHeight: 1.0, marginBottom: '1.5rem' }}>Auf Instagram</h2>
+            <div style={{ width: 40, height: 1, background: 'var(--terra)', opacity: 0.4, margin: '0 auto 1.5rem' }} aria-hidden="true" />
+            <p className="font-sans" style={{ fontSize: '0.875rem', color: 'var(--slate)', lineHeight: 1.7 }}>
+              Tagesaktuelle Momente, neue Sorten & Standort-Updates
+            </p>
+          </motion.div>
+
+          {/* Post grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '3.5rem' }}>
+            {[
+              { bg: 'linear-gradient(145deg, #F5E0E8 0%, #EAD0DC 100%)', icon: '✨', label: 'Nutella & Giotto' },
+              { bg: 'linear-gradient(145deg, #EDE8DF 0%, #D8D0C4 100%)', icon: '🚐', label: 'Der Wagen' },
+              { bg: 'linear-gradient(145deg, #F2DDE6 0%, #E8C4D0 100%)', icon: '🥞', label: 'Süße Crêpe' },
+              { bg: 'linear-gradient(145deg, #EDE4D8 0%, #D8CCBC 100%)', icon: '🧀', label: 'Cheese & Ham' },
+              { bg: 'linear-gradient(145deg, #F8F0E8 0%, #EDE0D0 100%)', icon: '🍓', label: 'Frische Zutaten' },
+              { bg: 'linear-gradient(145deg, #2A2420 0%, #1A1614 100%)', icon: '🌙', label: 'Abends am Wagen' },
+            ].map((post, i) => (
+              <motion.a
+                key={i}
+                href="https://www.instagram.com/creperie.klinger"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, scale: 0.96 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: i * 0.07, ease }}
+                whileHover={{ scale: 1.03 }}
+                style={{ display: 'block', aspectRatio: '1', borderRadius: 2, background: post.bg, position: 'relative', overflow: 'hidden', cursor: 'pointer', textDecoration: 'none' }}
+              >
+                {/* Hover overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.25 }}
+                  style={{ position: 'absolute', inset: 0, background: 'rgba(26,22,20,0.45)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                >
+                  {/* Instagram icon */}
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="17.5" cy="6.5" r="1" fill="white"/>
+                  </svg>
+                  <span className="font-sans" style={{ fontSize: '9px', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.85)' }}>{post.label}</span>
+                </motion.div>
+
+                {/* Icon placeholder */}
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ fontSize: '2.5rem', opacity: 0.35 }}>{post.icon}</span>
+                </div>
+              </motion.a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.5 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="var(--terra)" strokeWidth="1.5"/>
+                <circle cx="12" cy="12" r="4.5" stroke="var(--terra)" strokeWidth="1.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="var(--terra)"/>
+              </svg>
+              <span className="font-sans" style={{ fontSize: '0.875rem', color: 'var(--slate)', letterSpacing: '0.02em' }}>@creperie.klinger</span>
+            </div>
+            <a
+              href="https://www.instagram.com/creperie.klinger"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-sans"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', borderRadius: '9999px', padding: '0.875rem 2rem', border: '1px solid rgba(224,136,158,0.3)', color: 'var(--terra)', transition: 'all 0.3s cubic-bezier(0.32,0.72,0,1)', textDecoration: 'none' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'var(--terra)'; (e.currentTarget as HTMLAnchorElement).style.color = 'white'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--terra)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'transparent'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--terra)'; (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(224,136,158,0.3)'; }}
+            >
+              Profil besuchen
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </a>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* ══════════════════════════════
           STORY TEASER
       ══════════════════════════════ */}
       <section style={{ padding: '8rem 0', background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>

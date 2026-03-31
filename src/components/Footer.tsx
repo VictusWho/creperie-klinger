@@ -32,6 +32,21 @@ export default function Footer() {
                 Handmade daily
               </span>
             </div>
+            <a
+              href="https://www.instagram.com/creperie.klinger"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ marginTop: '1.25rem', display: 'inline-flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', opacity: 0.35, transition: 'opacity 0.25s ease' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.75')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '0.35')}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="white" strokeWidth="1.5"/>
+                <circle cx="12" cy="12" r="4.5" stroke="white" strokeWidth="1.5"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="white"/>
+              </svg>
+              <span className="font-sans" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.8)', letterSpacing: '0.06em' }}>@creperie.klinger</span>
+            </a>
           </div>
 
           {/* Navigation */}
